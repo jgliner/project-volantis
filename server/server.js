@@ -15,8 +15,13 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 require('./routes.js')(app, express);
 
-const port = process.env.PORT || 7001;
+const port = process.env.PORT || 6001;
 
-console.log(`server running on port ${port}`);
-// start listening to requests on port 7001
-app.listen(port);
+const init = require('./db/testData.js');
+
+init().then(() => {
+  console.log(`Server is listening on port ${port}`);
+  app.listen(port);
+});
+
+module.exports = app;
